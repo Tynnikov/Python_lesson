@@ -16,6 +16,8 @@ bg = pygame.image.load('Game/bg.jpg')
 char = pygame.image.load('Game/standing.png')
 
 clock = pygame.time.Clock()
+music = pygame.mixer.music.load('Game/music.mp3')
+pygame.mixer.music.play(-1)  # обеспечивает зацикливание музыки
 
 score = 0
 
@@ -52,6 +54,23 @@ class Player():
                 win.blit(walkLeft[0], (self.x, self.y))
         self.hitbox = (self.x + 20, self.y, 28, 60)  # рисует hitbox вокруг персонажа
         # pygame.draw.rect(win, (255, 0, 0), self.hitbox, 2)
+
+    def hit(self):
+        self.x = 60
+        self.y = 410
+        self.walkCount = 0
+        font1 = pygame.font.SysFont('comicsans', 100)
+        text = font1.render('-5', 1, (255, 0, 0))
+        win.blit(text, (250 - (text.get_width() / 2), 200))
+        pygame.display.update()
+        i = 0
+        while i < 300:
+            pygame.time.delay(10)
+            i += 1
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    i = 301
+                    pygame.quit()
 
 
 class Projectile():
@@ -154,6 +173,10 @@ bullets = []
 run = True
 while run:
     clock.tick(27)  # fps
+    if man.hitbox[1] < goblin.hitbox[1] + goblin.hitbox[3] and man.hitbox[1] + man.hitbox[3] > goblin.hitbox[1]:
+        if man.hitbox[0] + man.hitbox[2] > goblin.hitbox[0] and man.hitbox[0] < goblin.hitbox[0] + goblin.hitbox[2]:
+            man.hit()
+            score -= 5
 
     if shootLoop > 0:  # исправление глюка с очередью из пуль
         shootLoop += 1
