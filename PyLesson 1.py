@@ -70,7 +70,8 @@ while DistanceLastDay > DistanceFirstDay:
     countDays += 1
 
 print(f"Общий результат превышен, через {countDays}")
-
+ 
+    
 
 
 
