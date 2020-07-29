@@ -104,24 +104,32 @@ for idx, elem in enumerate(list_of_words):
 # Пользователь ввел число 1. Результат: 7, 5, 3, 3, 2, 1.
 # Набор натуральных чисел можно задать непосредственно в коде, например, my_list = [7, 5, 3, 3, 2].
 
-# number = int(input('Введите число: '))
-# my_list = [7, 5, 3, 3, 2]
-# countOfmatch = my_list.count(number)
-#
-# for i in my_list:
-#     if countOfmatch > 0:
-#         match = my_list.index(number)
-#         my_list.insert(match + countOfmatch, number)
-#         break
-#     else:
-#         if number > i:
-#             match = my_list.index(i)
-#             my_list.insert(match, number)
-#             break
-#         elif number < my_list[len(my_list) - 1]:
-#             my_list.append(number)
-#
-# print(my_list)
+number = int(input('Введите число: '))
+my_list = [7, 5, 3, 3, 2]
+count_of_match = my_list.count(number)
+del_last_elem = len(my_list)
+
+for i in my_list:
+    if count_of_match > 0:
+        if number == i:
+            match = my_list.index(i) + count_of_match
+            my_list.insert(match, number)
+            my_list.pop(del_last_elem)
+            break
+
+    elif count_of_match == 0:
+        if number > i:
+            match = my_list.index(i)
+            my_list.insert(match, number)
+            my_list.pop(del_last_elem - 1)
+            break
+        elif number < my_list[len(my_list) - 1]:
+            my_list.append(number)
+            my_list.pop(del_last_elem - 1)
+            break
+
+print(my_list)
+
 
 # box = ['apple', 'melon', 'banana', 'apple', 'melon', 'banana', 'apple', 'melon', 'banana','apple', 'melon', 'banana']
 # lenght = len(max(box, key=len))
