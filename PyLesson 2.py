@@ -87,14 +87,13 @@
 # Вывести каждое слово с новой строки. Строки необходимо пронумеровать.
 # Если в слово длинное, выводить только первые 10 букв в слове
 
-# words = input('Введите предложение. Слова больше 10 букв будут сокращены. ')
-# letter = words.split(' ')
-# for elem in range(len(letter)):
-#     if len(letter[elem]) > 10:
-#         indexShortWord = letter[elem]
-#         print(f'{elem} - {indexShortWord[:10]}')
-#     else:
-#         print(f'{elem} - {letter[elem]}')
+words = input('Введите предложение. Слова больше 10 букв будут сокращены. ')
+list_of_words = words.split()
+for idx, elem in enumerate(list_of_words):
+    if len(elem) > 10:
+        print(idx, elem[:10])
+    else:
+        print(idx, elem)
 
 # Задача-5: Реализовать структуру «Рейтинг», представляющую собой не возрастающий набор натуральных чисел.
 # У пользователя необходимо запрашивать новый элемент рейтинга.
