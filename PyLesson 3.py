@@ -163,7 +163,7 @@ check_string(s)
 #
 # result = list(map(lambda x: x ** 2, data))
 # print(result, '- lambda')
-
+ 
 #
 # with open('9.txt' 'r') as file:
 #     for line in file:
