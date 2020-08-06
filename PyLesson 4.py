@@ -3,12 +3,15 @@
 В расчете необходимо использовать формулу: (выработка в часах*ставка в час) + премия.
 Для выполнения расчета для конкретных значений необходимо запускать скрипт с параметрами.'''
 
-# from sys import argv
-#
-# file_name, work_hours, salary_per_hour, bonus = argv
-#
-# calc_salary = (int(work_hours) * int(salary_per_hour)) + int(bonus)
-# print(calc_salary)
+from sys import argv
+
+script_name, first_param, second_param, third_param = argv
+
+f_name, worker_hours, per_hour, bonus = argv
+
+salary = (int(worker_hours) * int(per_hour)) + int(bonus)
+print(f'Ваша зарплата {salary} у.е.')
+
 
 # # Задание-2:
 '''
@@ -17,21 +20,16 @@
 Пример исходного списка: [300, 2, 12, 44, 1, 1, 4, 10, 7, 1, 78, 123, 55].
 Результат: [12, 44, 4, 10, 78, 123]
 '''
+my_list = [300, 2, 12, 44, 1, 1, 4, 10, 7, 1, 78, 123, 55]
+new_list = []
+for i in range(len(my_list)):
+    if my_list[i] == my_list[0]:
+        continue
+    if my_list[i] > my_list[i-1]:
+        new_list.append(my_list[i])
 
-# my_list = [300, 2, 12, 44, 1, 1, 4, 10, 7, 1, 78, 123, 55]
-# new_list = []
-# i = 0
-#
-# for el in my_list:
-#     if el > my_list[i - 1]:
-#         new_list.append(el)
-#     i += 1
-#
-# print(new_list)
+print(new_list)
 
-#
-# new_list = [el for el in my_list if el > my_list[i - 1]]
-# print(new_list)
 
 
 
@@ -41,10 +39,8 @@
 Необходимо решить задание в одну строку.
 Подсказка: использовать функцию range() и генератор.'''
 
-# my_list = [i for i in range(20, 240) if i % 20 == 0 or i % 21 == 0]
-# print(my_list)
-
-
+foo = [el for el in range(20, 241) if el % 20 == 0 or el % 21 == 0]
+print(foo)
 
 
 # # Задание-4:
@@ -52,9 +48,11 @@
 # Сформировать итоговый массив чисел, соответствующих требованию.
 # Элементы вывести в порядке их следования в исходном списке.
 # Для выполнения задания обязательно использовать генератор.'''
-# my_list = [1, 2, 2, 3, 4, 4, 4, 5]
-# new_list = [elem for elem in my_list if my_list.count(elem) < 2]
-# print(new_list)
+
+
+my_list = [1, 2, 2, 3, 4, 4, 4, 5]
+distinct_list = [i for i in my_list if my_list.count(i) < 2]
+print(distinct_list)
 
 
 
@@ -63,50 +61,65 @@
 # В список должны войти четные числа от 100 до 1000 (включая границы).
 # Необходимо получить результат вычисления произведения всех элементов списка.
 # Подсказка: использовать функцию reduce().
-# from functools import reduce
-# my_list = [i for i in range(100, 1001) if i % 2 == 0]
-# print(my_list)
-#
-# def sum_list(prev_el, el):
-#     return prev_el + el
-#
-# print(reduce(sum_list, my_list))
+
+from functools import reduce
+
+my_list = [el for el in range(100, 1001) if el % 2 == 0]
+new_l = my_list
+
+
+def my_func(prev_el, el):
+    return prev_el + el
+
+
+print('Sum all numbers ', reduce(my_func, my_list))
 
 
 
-# # Задание-6:
-# '''Реализовать два небольших скрипта:
-# а) бесконечный итератор, генерирующий целые числа, начиная с указанного,
-# б) бесконечный итератор, повторяющий элементы некоторого списка, определенного заранее.
-# Подсказка: использовать функцию count() и cycle() модуля itertools.'''
-# from itertools import count, cycle
-# # a)
-# def generator_int(start_int, stop_int):
-#     for i in count(start_int):
-#         if i > stop_int:
-#             break
-#         else:
-#             print(i)
-#
-# def generator_loop(number_loop, elem):
-#     с = number_loop
-#     for el in cycle(elem):
-#         if с > 20:
-#             break
-#         print(el)
-#         с += 1
-#
-# generator_loop(6, 'Hello')
-#
-#
+# Задание-6:
+'''Реализовать два небольших скрипта:
+а) бесконечный итератор, генерирующий целые числа, начиная с указанного,
+б) бесконечный итератор, повторяющий элементы некоторого списка, определенного заранее.
+Подсказка: использовать функцию count() и cycle() модуля itertools.'''
+from itertools import count, cycle
 
-def my_factorial(n):
-    res = 1
-    for i in range(1, n+1):
-        res *= i
-    return res
 
-print(my_factorial(10))
+# a)
+def g_infinity(start, stop_number):
+    for el in count(start):
+        if el > stop_number:
+            break
+        else:
+            print(el)
 
-from math import factorial
-print(factorial(10))
+
+# b)
+def g_same_values(value, stop_number):
+    counter = 0
+    for el in cycle(value):
+        if counter > stop_number:
+            break
+        else:
+            print(el)
+            counter += 1
+
+# Задание-7:
+'''Реализовать генератор с помощью функции с ключевым словом yield,
+создающим очередное значение. При вызове функции должен создаваться объект-генератор. 
+Функция должна вызываться следующим образом: for el in fact(n). Функция отвечает 
+за получение факториала числа, а в цикле необходимо выводить только первые n чисел,
+начиная с 1! и до n!. 
+Подсказка: факториал числа n — произведение чисел от 1 до n. Например, факториал четырёх 4! = 1 * 2 * 3 * 4 = 24
+'''
+
+
+def fact(n):
+    fib = 1
+    for i in range(1, n + 1):
+        fib *= i
+    yield fib
+
+for n in range(5):
+    for el in fact(n):
+        print(f"Факториал {n}! =", el)
+        n += 1
