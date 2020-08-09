@@ -13,25 +13,31 @@ t - Открыть файл в текстовом формате (режим п�
 # Задание - 1 Создать программно файл в текстовом формате, записать в него построчно данные,
 # вводимые пользователем. Об окончании ввода данных свидетельствует пустая строка.
 
-# with open('my_file.txt', 'w', encoding='utf-8') as f:
-#     for line in range(3):
-#         content = input('Word: ')  + ' \n'
-#         f.write(content)
-#
-# with open('my_file.txt', 'r', encoding='utf-8') as f:
-#     for line in f:
-#         print(line)
+with open('my_file.txt', 'w', encoding='utf-8') as f:
+    for line in range(3):
+        content = input('Word: ')  + ' \n'
+        f.write(content)
+
+with open('my_file.txt', 'r', encoding='utf-8') as f:
+    for line in f:
+        print(line, end='')
+
 
 
 # Задание - 2 Создать текстовый файл (не программно), сохранить в нем несколько строк,
 # выполнить подсчет количества строк, количества слов в каждой строке
-# count = 0
-# with open('new_file.txt', 'r', encoding='utf-8') as f:
-#     for line in f:
-#         line_split = line.split(' ')
-#         for i in range(len(line_split)):
-#             count += 1
-#     print(f'Количество слов в файле - {count}')
+
+words = 0
+lines = 0
+
+with open('test.txt', 'r', encoding='utf-8') as file:
+    for line in file:
+        lines += 1
+        line_split = line.split(' ')
+        for i in range(len(line_split)):
+            words += 1
+    print(f'Count words - {words}')
+    print(f'Count lines - {lines}')
 
 # Задание - 3 Создать текстовый файл (не программно), построчно записать фамилии сотрудников
 # и величину их окладов (не менее 10 строк). Определить, кто из сотрудников имеет оклад менее
@@ -40,11 +46,16 @@ t - Открыть файл в текстовом формате (режим п�
 # Иванов 23543.12
 # Петров 13749.32
 
-# with open('salary.txt', 'r', encoding='utf-8') as f:
-#     for line in f:
-#         line_split = line.split('-')
-#         if int(line_split[1]) > 55000:
-#             print(line)
+with open('salary.txt', 'r', encoding='utf-8') as file:
+    list_salary = []
+    for line in file:
+        line_split = line.split(' ')
+        list_salary.append(float(line_split[1]))
+        number = float(line_split[1])
+        if number < 55000:
+            print(f'Salary: surname {line_split[0]} - {line_split[1]}')
+    avg_of_salary = sum(list_salary) / len(list_salary)
+    print(round(avg_of_salary, 2))
 
 # Задание - 4 Создать (не программно) текстовый файл со следующим содержимым:
 # One — 1
@@ -54,28 +65,28 @@ t - Открыть файл в текстовом формате (режим п�
 # Необходимо написать программу, открывающую файл на чтение и считывающую построчно данные.
 # При этом английские числительные должны заменяться на русские.
 # Новый блок строк должен записываться в новый текстовый файл.
-#
-# def make_list():
-#     with open('my_number.txt', 'r', encoding='utf-8') as f:
-#         for line in f:
-#             line_split = line.split('-')
-#             num.append(line_split[1])
-#
-# def make_dict(key, value):
-#     return dict(zip(key, value))
-#
-# def write_new_file(dct):
-#     with open('new_number.txt', 'w', encoding='utf-8') as f:
-#         for key, value in dct.items():
-#             string = key + ' - ' + str(value) + ' \n'
-#             f.write(string)
-#
-# words = ['Один', 'Два', 'Три', 'Четыре']
-# num = []
-#
-# make_list()
-# new_dict = make_dict(words, num)
-# write_new_file(new_dict)
+
+def make_list():
+    with open('my_number.txt', 'r', encoding='utf-8') as f:
+        for line in f:
+            line_split = line.split('-')
+            num.append(line_split[1])
+
+def make_dict(key, value):
+    return dict(zip(key, value))
+
+def write_new_file(dct):
+    with open('new_number.txt', 'w', encoding='utf-8') as f:
+        for key, value in dct.items():
+            string = key + ' - ' + str(value) + ' \n'
+            f.write(string)
+
+words = ['Один', 'Два', 'Три', 'Четыре']
+num = []
+
+make_list()
+new_dict = make_dict(words, num)
+write_new_file(new_dict)
 
 # Задание - 5 Создать (программно) текстовый файл, записать в него программно набор чисел, разделенных пробелами.
 # Программа должна подсчитывать сумму чисел в файле и выводить ее на экран.
