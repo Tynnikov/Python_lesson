@@ -1,3 +1,213 @@
+''' Задание - 1:
+Реализовать класс Matrix (матрица). Обеспечить перегрузку конструктора класса (метод __init__()),
+который должен принимать данные (список списков) для формирования матрицы.
+Подсказка: матрица — система некоторых математических величин, расположенных в виде прямоугольной схемы.
+Примеры матриц: 3 на 2, 3 на 3, 2 на 4.
+
+
+Следующий шаг — реализовать перегрузку метода __str__() для вывода матрицы в привычном виде.
+Далее реализовать перегрузку метода __add__() для реализации операции сложения двух объектов класса Matrix (двух матриц).
+Результатом сложения должна быть новая матрица.
+Подсказка: сложение элементов матриц выполнять поэлементно — первый элемент первой строки первой
+матрицы складываем с первым элементом первой строки второй матрицы и т.д.
+
+'''
+# Вариант 1
+
+# class Matrix():
+#     def __init__(self, matrix):
+#         self.matrix = matrix
+#
+#     def __str__(self):
+#         return '\n'.join('\t'.join([str(itm) for itm in line]) for line in self.matrix)
+#
+#     def __add__(self, other):
+#         try:
+#             m = [[int(self.matrix[line][itm]) + int(other.matrix[line][itm]) for itm in range(len(self.matrix[line]))]
+#                  for line in range(len(self.matrix))]
+#             return Matrix(m)
+#         except IndexError:
+#             return f'Ошибка размерности матрицы'
+
+# Вариант 2
+class Matrix():
+    def __init__(self, matrix):
+        self.matrix = matrix
+
+    def __str__(self):
+        return '\n'.join(map(str, self.matrix))
+
+    def __add__(self, other):
+        l = []
+        for i in range(len(self.matrix)):
+            l.append([])
+            for j in range(len(self.matrix[0])):
+                l[i].append(self.matrix[i][j] + other.matrix[i][j])
+        return '\n'.join(map(str, l))
+
+matrix_one = Matrix([[1, 2],
+                     [3, 4],
+                     [5, 6]])
+matrix_two = Matrix([[10, 12],
+                     [13,14],
+                     [15,16]])
+
+matrix_sum = matrix_one + matrix_two
+print(matrix_one)
+print(matrix_two)
+print(matrix_sum)
+
+'''
+Задание - 2:
+Реализовать проект расчета суммарного расхода ткани на 
+производство одежды. Основная сущность (класс) этого 
+проекта — одежда, которая может иметь определенное название. 
+К типам одежды в этом проекте относятся пальто и костюм. 
+У этих типов одежды существуют параметры: размер (для пальто) 
+и рост (для костюма). Это могут быть обычные числа: V и H, 
+соответственно. 
+Для определения расхода ткани по каждому типу одежды использовать 
+формулы: для пальто (V/6.5 + 0.5), для костюма (2*H + 0.3). 
+Проверить работу этих методов на реальных данных.
+Реализовать общий подсчет расхода ткани. Проверить на 
+практике полученные на этом уроке знания: реализовать абстрактные 
+классы для основных классов проекта, проверить на практике 
+работу декоратора @property.
+'''
+class Textil:
+    def __init__(self, width, height):
+        self.width = width
+        self.height = height
+
+    def get_square_c(self):
+        return self.width / 6.5 + 0.5
+
+    def get_square_j(self):
+        return self.height * 2 + 0.3
+
+    @property
+    def get_sq_full(self):
+        return str(f'Площадь общая ткани \n'
+                   f' {(self.width / 6.5 + 0.5) + (self.height * 2 + 0.3)}')
+
+
+class Coat(Textil):
+    def __init__(self, width, height):
+        super().__init__(width, height)
+        self.square_c = round(self.width / 6.5 + 0.5)
+
+    def __str__(self):
+        return f'Площадь на пальто {self.square_c}'
+
+
+class Jacket(Textil):
+    def __init__(self, width, height):
+        super().__init__(width, height)
+        self.square_j = round(self.height * 2 + 0.3)
+
+    def __str__(self):
+        return f'Площадь на костюм {self.square_j}'
+
+coat = Coat(2, 4)
+jacket = Jacket(1, 2)
+print(coat)
+print(jacket)
+print(coat.get_sq_full)
+print(jacket.get_sq_full)
+print(jacket.get_square_c())
+print(jacket.get_square_j())
+
+
+'''
+Задание - 3 :
+Реализовать программу работы с органическими клетками, 
+состоящими из ячеек. Необходимо создать класс Клетка. 
+В его конструкторе инициализировать параметр, соответствующий 
+количеству ячеек клетки (целое число). В классе должны быть 
+реализованы методы перегрузки арифметических операторов: 
+сложение (__add__()), вычитание (__sub__()), 
+умножение (__mul__()), деление (__truediv__()). 
+Данные методы должны применяться только к клеткам и 
+выполнять увеличение, уменьшение, умножение и обычное 
+(не целочисленное) деление клеток, соответственно. 
+В методе деления должно осуществляться округление значения 
+до целого числа.
+Сложение. Объединение двух клеток. При этом число ячеек 
+общей клетки должно равняться сумме ячеек исходных двух клеток.
+Вычитание. Участвуют две клетки. Операцию необходимо выполнять 
+только если разность количества ячеек двух клеток больше нуля, 
+иначе выводить соответствующее сообщение.
+Умножение. Создается общая клетка из двух. Число ячеек общей 
+клетки определяется как произведение количества ячеек этих 
+двух клеток.
+Деление. Создается общая клетка из двух. Число ячеек общей 
+клетки определяется как целочисленное деление количества ячеек 
+этих двух клеток.
+В классе необходимо реализовать метод make_order(), 
+принимающий экземпляр класса и количество ячеек в ряду. 
+Данный метод позволяет организовать ячейки по рядам.
+Метод должен возвращать строку вида *****\n*****\n*****..., 
+где количество ячеек между \n равно переданному аргументу. 
+Если ячеек на формирование ряда не хватает, то в последний 
+ряд записываются все оставшиеся.
+Например, количество ячеек клетки равняется 12, количество 
+ячеек в ряду — 5. 
+Тогда метод make_order() вернет строку: *****\n*****\n**.
+Или, количество ячеек клетки равняется 15, количество 
+ячеек в ряду — 5. Тогда метод make_order() вернет строку: 
+*****\n*****\n*****.
+'''
+
+class Ceil():
+    def __init__(self, nums):
+        self.nums = nums
+
+    def make_order_one(self, rows):
+        return '\n'.join(['*' * rows for _ in range(self.nums // rows)]) + '\n' + '*' * (self.nums % rows)
+
+    def make_order_two(self, rows):
+        row = ''
+        for i in range(int(self.nums / rows)):
+            row += f'{"*" * rows} \n'
+        row += f'{"*" * (self.nums % rows)}'
+        return row
+
+    def __str__(self):
+        return self.nums
+
+    def __add__(self, other):
+        return f'Сумма ячейк: {self.nums + other.nums}'
+
+    def __sub__(self, other):
+        return self.nums - other.nums if self.nums - other.nums > 0 \
+            else 'Вычитание невозможно'
+
+    def __mul__(self, other):
+        return f'Умножение ячейк: {self.nums * other.nums}'
+
+    def __floordiv__(self, other):
+        return f'Деление ячейк: {self.nums // other.nums}'
+
+ceil_one = Ceil(2000)
+ceil_two = Ceil(100)
+print(ceil_one + ceil_two)
+# print(ceil_one - ceil_two)
+# print(ceil_one * ceil_two)
+# print(ceil_one // ceil_two)
+print(ceil_two.make_order_one(21))
+print(ceil_two.make_order_two(5))
+
+
+
+
+
+
+
+
+
+
+
+# Extra
 import pygame
 
 pygame.init()
