@@ -4,32 +4,70 @@
 преобразовывать их тип к типу «Число». Второй, с декоратором @staticmethod, должен проводить валидацию числа, 
 месяца и года (например, месяц — от 1 до 12). Проверить работу полученной структуры на реальных данных.
 '''
-class Data:
-    def __init__(self, str_date):
-        self.str_date = str_date
+''' Задание - 1:
+Реализовать класс «Дата», функция-конструктор которого должна принимать дату в виде строки формата «день-месяц-год». 
+В рамках класса реализовать два метода. Первый, с декоратором @classmethod, должен извлекать число, месяц, год и 
+преобразовывать их тип к типу «Число». Второй, с декоратором @staticmethod, должен проводить валидацию числа, 
+месяца и года (например, месяц — от 1 до 12). Проверить работу полученной структуры на реальных данных.
+'''
 
-    @classmethod
-    def convert_to_int_date(cls, date):
-        str_date = date
-        my_date = []
-        for i in date.split():
-            if i != '/':
-                my_date.append(i)
-        return cls(str_date)
+class Date:
+  def __init__(self, date_string):
+    self.date_string = date_string
+
+  @staticmethod
+  def is_valid_date(date_string):
+      day, month, year = parse_date_str(date_string)
+      return is_day_valid(day) and is_month_valid(month) and is_year_valid(year)
 
 
-    @staticmethod
-    def valid_date(day, month, year):
-        if 1 <= day <= 31 and 1 <= int(month) <= 12 and 2019 >= year >= 0:
-            print(f'Date: {day} {month} {year}')
+def parse_date_str(date_string):
+    day, month, year = date_string.split('-')
+    return int(day), int(month), int(year)
 
-d = '21/08/20'
+def is_day_valid(day):
+  if 1 <= day <= 31:
+    return True
+  return False
 
-data = Data(d)
-print(data.convert_to_int_date(d))
-print(type(data.str_date))
-print(Data.valid_date(11, 12, 2020))
+def is_month_valid(month):
+  if 1 <= month <= 12:
+    return True
+  return False
+  
+def is_year_valid(year):
+  if 0 < year:
+    return True
+  return False
 
+
+
+
+
+assert parse_date_str('1-2-3') == (1,2,3)
+
+assert is_day_valid(10)
+assert not is_day_valid(132)
+assert not is_day_valid(-1)
+assert is_day_valid(1)
+assert is_day_valid(31)
+
+assert is_month_valid(12)
+assert not is_month_valid(14)
+
+assert not is_year_valid(-2020)
+assert is_year_valid(20)
+assert not is_year_valid(0)
+
+
+date1 = Date('01-01-2000')
+assert date1.date_string == '01-01-2000'
+
+
+assert Date.is_valid_date('01-01-2020')
+assert not Date.is_valid_date('123-01-2020')
+assert not Date.is_valid_date('01-023-2020')
+assert not Date.is_valid_date('01-02-0')
 
 ''' Задание - 2:
 Создайте собственный класс-исключение, обрабатывающий ситуацию деления на ноль. Проверьте его работу на данных, 
