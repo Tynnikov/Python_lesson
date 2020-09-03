@@ -26,19 +26,16 @@ def parse_date_str(date_string):
     return int(day), int(month), int(year)
 
 def is_day_valid(day):
-  if 1 <= day <= 31:
-    return True
-  return False
+  return if 1 <= day <= 31:
+
 
 def is_month_valid(month):
-  if 1 <= month <= 12:
-    return True
-  return False
+  return if 1 <= month <= 12:
+
   
 def is_year_valid(year):
-  if 0 < year:
-    return True
-  return False
+  return if 0 < year:
+
 
 
 
